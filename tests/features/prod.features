@@ -1,0 +1,35 @@
+Feature: Product management
+  As a user
+  I want to manage products
+
+  Scenario: Create a product with correct data
+    Given I have a product with name "Product 1", price 100, description "A great product", quantity 10, and status "Available"
+    When I create the product
+    Then the product should be created
+
+  Scenario: Create a product with negative price
+    Given I have a product with name "Product 2", price -50, description "A bad product", quantity 10, and status "Available"
+    When I create the product
+    Then the product should not be created and I should receive an error
+
+  Scenario: Create and delete a product
+    Given I have a product with name "Product 1", price 100, description "A great product", quantity 10, and status "Available"
+    When I create the product
+    Then the product should be created
+    When I delete the product
+    Then the product should be deleted
+
+  Scenario: Get a list of products
+    When I get the list of products
+    Then the list of products should be retrieved
+
+  Scenario: Create and get a product
+      Given I have a product with name "Product 1", price 100, description "A great product", quantity 10, and status "Available"
+      When I create the product
+      Then the product should be created
+      When I get the product
+      Then the product should be retrieved
+  
+  Scenario: Get a product's history
+    When I get the product's history
+    Then the product's history should be retrieved
