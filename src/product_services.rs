@@ -4,6 +4,7 @@ use actix_web::web;
 use futures_util::stream::StreamExt;
 
 pub async fn get_products_service(client: web::Data<Client>) -> Result<Vec<ShortProduct>, String> {
+    println!("get_products_service");
     let collection: Collection<ShortProduct> =
         client.database(DB_NAME).collection(PRODUCT_COLLECTION_NAME);
     let projection = doc! {"_id": 1, "name": 1, "price": 1};

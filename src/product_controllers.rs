@@ -5,6 +5,7 @@ use crate::product_services::{get_products_service, get_product_service, get_pro
 
 #[get("/api/products")]
 pub async fn get_products(client: web::Data<Client>) -> HttpResponse {
+    println!("get_products");
     match get_products_service(client).await {
         Ok(products) => {
             if !products.is_empty() {

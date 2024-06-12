@@ -2,7 +2,9 @@ mod models;
 mod product_controllers;
 mod product_services;
 
-use actix_web::{web, App, HttpServer};
+use actix_web::{web, App, HttpServer,http};
+use actix_cors::Cors;
+
 use mongodb::Client;
 use std::env;
 
@@ -25,7 +27,13 @@ async fn main() -> std::io::Result<()> {
         .expect("failed to connect to db");
 
     HttpServer::new(move || {
-        App::new()
+        App::new().wrap(
+            Cors::default()
+                .allowed_origin("http://localhost:3000")
+                .allowed_methods(vec!["GET", "POST", "PUT", "DELETE"])
+                .allowed_headers(vec![http::header::CONTENT_TYPE, http::header::AUTHORIZATION])
+                .max_age(3600),
+        )
             .app_data(web::Data::new(client.clone()))
             .service(get_product)
             .service(get_products)
